@@ -1,19 +1,15 @@
-let mysql = require('mysql2');
+let express = require('express')
+let app = express();
+let cors = require('cors')
+let port = process.env.port || 8080
+app.use(cors({
+  origin:"*",
+  methods:['GET','POST','DELETE','PUT','PATCH']
+}))
+app.use(express.json());
+app.use(express.urlencoded({extended:true}))
+app.use(express.static(__dirname+'/views'));
 
-let connection = mysql.createConnection({
-   host: 'sql.freedb.tech',
-    user: 'freedb_AmazingAsim',
-    password: '2yvUB!Rg37cTqP&',
-    database: 'freedb_hotelmanagement',
-    port:'3306'
-});
-
-connection.connect(function(err) {
-  if (err) { throw err };
-  connection.query('show databases',function(err,res){
-    if(err){throw new Error('wrong query')}
-    console.log(res)
-  })
-});
+app.listen(port)
 
 
